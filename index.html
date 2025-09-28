@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo Strategy Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 text-slate-800 min-h-screen">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <div class="animate-fade-in">
+                <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                    Algo Strategy Builder
+                </h1>
+                <p class="text-slate-600 text-lg max-w-3xl mx-auto leading-relaxed">
+                    Create sophisticated, automated trading strategies with our intuitive visual builder. 
+                    No coding required – just define your rules and watch them come to life.
+                </p>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="mb-8">
+            <div class="bg-white rounded-full shadow-lg p-2 max-w-4xl mx-auto">
+                <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out" style="width: 25%"></div>
+            </div>
+        </div>
+
+        <!-- Stepper Navigation -->
+        <div id="stepper" class="flex items-center justify-between mb-8 p-6 bg-white rounded-xl shadow-xl max-w-5xl mx-auto backdrop-blur-sm border border-white/20">
+            <div id="step-1" class="step-indicator active flex-1 text-center pb-2">
+                <div class="step-circle mx-auto mb-2">1</div>
+                <div class="font-semibold text-sm md:text-base">Entry Signal</div>
+                <div class="text-xs text-slate-400 hidden md:block">Define your 'IF' condition</div>
+            </div>
+            <div class="step-connector"></div>
+            <div id="step-2" class="step-indicator flex-1 text-center pb-2">
+                <div class="step-circle mx-auto mb-2">2</div>
+                <div class="font-semibold text-sm md:text-base">Action</div>
+                <div class="text-xs text-slate-400 hidden md:block">Define your 'THEN' action</div>
+            </div>
+            <div class="step-connector"></div>
+            <div id="step-3" class="step-indicator flex-1 text-center pb-2">
+                <div class="step-circle mx-auto mb-2">3</div>
+                <div class="font-semibold text-sm md:text-base">Risk Management</div>
+                <div class="text-xs text-slate-400 hidden md:block">Set Stop Loss & Take Profit</div>
+            </div>
+            <div class="step-connector"></div>
+            <div id="step-4" class="step-indicator flex-1 text-center pb-2">
+                <div class="step-circle mx-auto mb-2">4</div>
+                <div class="font-semibold text-sm md:text-base">Review</div>
+                <div class="text-xs text-slate-400 hidden md:block">Finalize your strategy</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="grid lg:grid-cols-2 gap-8">
+            <!-- Left Panel: Controls -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl border border-white/20">
+                <form id="strategy-form">
+                    <!-- Step 1: Entry Signal -->
+                    <div id="form-step-1" class="form-section active">
+                        <h2 class="text-3xl font-bold mb-6 text-slate-800">When should we enter a trade?</h2>
+                        <div class="space-y-6">
+                            <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+                                <p class="text-sm text-blue-800">
+                                    <span class="font-mono font-bold">IF</span> condition is met, 
+                                    <span class="font-mono font-bold">THEN</span> execute the trade.
+                                    <br>Example: <span class="font-mono text-blue-600">IF</span> 50-Day SMA 
+                                    <span class="font-mono text-blue-600">crosses above</span> 200-Day SMA
+                                </p>
+                            </div>
+                            
+                            <div class="space-y-4" id="conditions-container">
+                                <div class="condition-group p-4 border-2 border-dashed border-slate-200 rounded-lg hover:border-blue-300 transition-all">
+                                    <label class="block text-sm font-semibold text-slate-700 mb-3">Condition 1</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <select class="indicator-select w-full p-3 border-2 rounded-lg bg-white shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                            <option value="SMA_50">SMA (50)</option>
+                                            <option value="SMA_20">SMA (20)</option>
+                                            <option value="EMA_20">EMA (20)</option>
+                                            <option value="EMA_50">EMA (50)</option>
+                                            <option value="RSI_14">RSI (14)</option>
+                                            <option value="MACD">MACD</option>
+                                            <option value="PRICE">Current Price</option>
+                                        </select>
+                                        <select class="operator-select w-full p-3 border-2 rounded-lg bg-white shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                            <option value="crosses_above">Crosses Above</option>
+                                            <option value="crosses_below">Crosses Below</option>
+                                            <option value="greater_than">Is Greater Than</option>
+                                            <option value="less_than">Is Less Than</option>
+                                            <option value="equals">Equals</option>
+                                        </select>
+                                        <select class="comparison-select w-full p-3 border-2 rounded-lg bg-white shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                            <option value="SMA_200">SMA (200)</option>
+                                            <option value="SMA_100">SMA (100)</option>
+                                            <option value="EMA_50">EMA (50)</option>
+                                            <option value="fixed_value">Fixed Value...</option>
+                                            <option value="PRICE">Current Price</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="button" id="add-condition-btn" class="w-full text-blue-600 hover:bg-blue-50 p-4 rounded-lg border-2 border-dashed border-slate-300 hover:border-blue-400 transition-all font-semibold">
+                                <span class="text-xl mr-2">+</span> Add another condition (AND)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Action -->
+                    <div id="form-step-2" class="form-section">
+                        <h2 class="text-3xl font-bold mb-6 text-slate-800">What action should be taken?</h2>
+                        <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-400 mb-6">
+                            <p class="text-sm text-green-800">
+                                This is the "THEN" part of your strategy. 
+                                <br>Example: <span class="font-mono font-bold text-green-600">THEN BUY</span> 
+                                <span class="font-mono font-bold">10</span> shares
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-slate-700 mb-3">Order Type</label>
+                                <div class="flex space-x-3">
+                                    <button type="button" id="buy-btn" class="order-type-btn active flex-1 p-4 rounded-xl font-bold text-lg transition-all shadow-lg">
+                                        📈 BUY
+                                    </button>
+                                    <button type="button" id="sell-btn" class="order-type-btn flex-1 p-4 rounded-xl font-bold text-lg transition-all shadow-lg">
+                                        📉 SELL
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-lg font-semibold text-slate-700 mb-3">Quantity</label>
+                                <div class="flex space-x-3">
+                                    <div class="flex-1">
+                                        <input type="number" id="quantity-input" value="10" min="1" class="w-full p-4 border-2 rounded-xl shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg font-semibold">
+                                    </div>
+                                    <div class="w-32">
+                                        <select id="quantity-type" class="w-full p-4 border-2 rounded-xl bg-white shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                                            <option value="shares">Shares</option>
+                                            <option value="percent">% of Capital</option>
+                                            <option value="dollars">$ Amount</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-slate-500 mt-2">Choose between fixed shares, percentage of capital, or dollar amount</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Risk Management -->
+                    <div id="form-step-3" class="form-section">
+                        <h2 class="text-3xl font-bold mb-6 text-slate-800">How should we manage risk?</h2>
+                        <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-400 mb-6">
+                            <p class="text-sm text-red-800">
+                                Protect your capital by setting automatic exit points. 
+                                These rules help limit losses and secure profits.
+                            </p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="risk-input-group">
+                                <label for="stop-loss" class="block text-lg font-semibold text-slate-700 mb-3">
+                                    🛑 Stop Loss (%)
+                                </label>
+                                <input type="range" id="stop-loss-range" min="1" max="20" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider">
+                                <input type="number" id="stop-loss" value="5" min="1" max="50" class="mt-3 block w-full p-4 border-2 rounded-xl shadow-sm hover:border-red-400 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all text-lg font-semibold">
+                                <p class="text-sm text-slate-500 mt-2">Automatically sell if the price drops by this percentage</p>
+                            </div>
+                            
+                            <div class="risk-input-group">
+                                <label for="take-profit" class="block text-lg font-semibold text-slate-700 mb-3">
+                                    🎯 Take Profit (%)
+                                </label>
+                                <input type="range" id="take-profit-range" min="5" max="50" value="15" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider">
+                                <input type="number" id="take-profit" value="15" min="1" max="100" class="mt-3 block w-full p-4 border-2 rounded-xl shadow-sm hover:border-green-400 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all text-lg font-semibold">
+                                <p class="text-sm text-slate-500 mt-2">Automatically sell if the price increases by this percentage</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Review & Save -->
+                    <div id="form-step-4" class="form-section">
+                        <h2 class="text-3xl font-bold mb-6 text-slate-800">Review & Name Your Strategy</h2>
+                        
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border-2 border-blue-200 shadow-lg mb-6">
+                            <h3 class="font-bold text-blue-800 text-xl mb-4">📊 Strategy Summary</h3>
+                            <div id="strategy-summary" class="text-slate-700 leading-relaxed space-y-2">
+                                <!-- Strategy summary will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="strategy-name" class="block text-lg font-semibold text-slate-700 mb-3">Strategy Name</label>
+                                <input type="text" id="strategy-name" placeholder="e.g., Golden Cross Momentum Strategy" class="block w-full p-4 border-2 rounded-xl shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg">
+                            </div>
+                            
+                            <div>
+                                <label for="strategy-description" class="block text-lg font-semibold text-slate-700 mb-3">Description (Optional)</label>
+                                <textarea id="strategy-description" rows="3" placeholder="Describe your strategy's purpose and expected market conditions..." class="block w-full p-4 border-2 rounded-xl shadow-sm hover:border-blue-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Panel: Visualization -->
+            <div class="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-xl border border-white/20 sticky top-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-slate-900">📈 Live Visualization</h3>
+                    <div class="status-indicator bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                        ● Live
+                    </div>
+                </div>
+                
+                <div id="chart-container" class="bg-gradient-to-br from-slate-100 to-blue-100 rounded-xl border-2 border-slate-200 overflow-hidden mb-4" style="height: 400px;">
+                    <div class="chart-placeholder w-full h-full flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-6xl mb-4">📊</div>
+                            <p class="text-slate-500 font-semibold">Interactive Chart Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="visualization-text" class="text-center text-sm text-slate-600 p-4 bg-slate-50 rounded-xl border">
+                    Configure your strategy parameters to see the live visualization
+                </div>
+                
+                <!-- Strategy Stats -->
+                <div id="strategy-stats" class="mt-6 grid grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-600" id="potential-signals">--</div>
+                        <div class="text-sm text-blue-700">Potential Signals</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-600" id="risk-reward">--</div>
+                        <div class="text-sm text-green-700">Risk/Reward Ratio</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer Navigation -->
+        <footer class="mt-8 flex justify-between items-center max-w-5xl mx-auto pt-6">
+            <button id="prev-btn" class="nav-btn secondary py-4 px-8 rounded-xl font-bold text-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                ← Previous
+            </button>
+            <div class="flex space-x-4">
+                <button id="save-draft-btn" class="nav-btn outline py-4 px-6 rounded-xl font-bold transition-all shadow-lg">
+                    💾 Save Draft
+                </button>
+                <button id="next-btn" class="nav-btn primary py-4 px-8 rounded-xl font-bold text-lg transition-all shadow-lg">
+                    Next →
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
